@@ -1,0 +1,75 @@
+@startuml
+
+class Main {
+    +main(String[] args)
+}
+
+class Cliente {
+    -String nombre
+    -String telefono
+    +Cliente(String nombre, String telefono)
+    +getNombre(): String
+    +setNombre(String nombre): void
+    +getTelefono(): String
+    +setTelefono(String telefono): void
+    +mostrarInfoCliente(): void
+}
+
+class Mesa {
+    -int numeroMesa
+    -int capacidad
+    -boolean disponible
+    +Mesa(int numeroMesa, int capacidad)
+    +getNumeroMesa(): int
+    +setNumeroMesa(int numeroMesa): void
+    +getCapacidad(): int
+    +setCapacidad(int capacidad): void
+    +isDisponible(): boolean
+    +setDisponible(boolean disponible): void
+    +reservar(): void
+    +liberar(): void
+    +puedeAcomodar(int numPersonas): boolean
+}
+
+class Reserva {
+    -int id
+    -String fecha
+    -String hora
+    -int numPersonas
+    -Mesa mesaAsignada
+    -Cliente cliente
+    +Reserva(String fecha, String hora, int numPersonas, Cliente cliente)
+    +getFecha(): String
+    +setFecha(String fecha): void
+    +getHora(): String
+    +setHora(String hora): void
+    +getNumPersonas(): int
+    +setNumPersonas(int numPersonas): void
+    +getMesaAsignada(): Mesa
+    +setMesaAsignada(Mesa mesaAsignada): void
+    +getCliente(): Cliente
+    +setCliente(Cliente cliente): void
+    +getId(): int
+    +setId(int id): void
+    +coincideCon(int id): boolean
+    +coincideCon(String fecha, String hora): boolean
+    +mostrarInfoReserva(): void
+}
+
+class Restaurante {
+    -List<Mesa> mesas
+    -List<Reserva> reservas
+    +Restaurante(int numeroMesas, int[] capacidades)
+    +verificarDisponibilidad(String fecha, String hora, int numPersonas): boolean
+    +registrarReserva(String fecha, String hora, int numPersonas, Cliente cliente): boolean
+    +cancelarReserva(int id): void
+    +obtenerReservasPorDia(String fecha): void
+    +mostrarEstadoMesas(): void
+}
+
+Restaurante "1" *-- "1..*" Mesa
+Restaurante "1" *-- "0..*" Reserva
+Reserva "1..*" --* "1..*" Cliente
+Reserva "1..*" --* "1..*" Mesa
+Restaurante "1" o-- "0..*" Cliente
+@enduml
